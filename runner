@@ -1,0 +1,9 @@
+#!/bin/bash
+
+[ -z "$CI_SERVER_URL" ] && echo "need to set CI_SERVER_URL" && exit 1
+[ -z "$REGISTRATION_TOKEN" ] && echo "need to set REGISTRATION_TOKEN" && exit 1
+
+export REGISTER_NON_INTERACTIVE=true
+
+gitlab-runner register --executor docker --docker-image ruby:2.1 
+gitlab-runner run --working-directory /home/gitlab-runner
