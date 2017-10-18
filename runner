@@ -5,5 +5,5 @@
 
 export REGISTER_NON_INTERACTIVE=true
 
-gitlab-runner register --executor docker --docker-image ruby:2.1 
+gitlab-runner register --executor docker --docker-image docker:latest --docker-volumes /var/run/docker.sock:/var/run/docker.sock
 gitlab-runner run --working-directory /home/gitlab-runner
