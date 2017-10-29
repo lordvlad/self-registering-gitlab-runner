@@ -5,7 +5,8 @@
 [ -z "$REGISTRATION_TOKEN" ] && echo "need to set REGISTRATION_TOKEN" && exit 1
 
 # log in to docker registry
-if [[ -z "$DOCKER_USER" ]]; then
+if [ -n "$DOCKER_USER" ]
+then
   docker login -u $DOCKER_USER -p $DOCKER_PASSWORD ${DOCKER_REGISTRY:-registry.hub.docker.com}
 fi
 
