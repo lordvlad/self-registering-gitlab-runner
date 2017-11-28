@@ -3,3 +3,5 @@ LABEL maintainer="Waldemar Reusch<waldemar.reusch@googlemail.com>"
 
 ADD entrypoint /
 RUN chmod +x /entrypoint
+
+ENTRYPOINT ["/entrypoint"]
