@@ -3,5 +3,8 @@
 # register gitlab-runner
 gitlab-runner register
 
+# present current config
+cat /etc/gitlab-runner/config.toml > &2
+
 # launch gitlab-runner passing all arguments
 exec gitlab-runner run --working-directory /home/gitlab-runner
