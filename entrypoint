@@ -22,4 +22,4 @@ fi
 exec gitlab-ci-multi-runner register
 
 # launch gitlab-ci-multi-runner passing all arguments
-exec gitlab-ci-multi-runner "$@"
+exec gitlab-ci-multi-runner run --working-directory /home/gitlab-runner
