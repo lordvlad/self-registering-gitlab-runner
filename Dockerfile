@@ -1,7 +1,5 @@
-FROM gitlab/gitlab-runner:alpine-v10.2.0
-MAINTAINER Waldemar Reusch<waldemar.reusch@googlemail.com>
+FROM gitlab/gitlab-runner:alpine-v10.1.0
+LABEL maintainer="Waldemar Reusch<waldemar.reusch@googlemail.com>"
 
-COPY runner /
+ADD entrypoint /
 RUN chmod 755 /runner
-
-ENTRYPOINT ["/runner"]
