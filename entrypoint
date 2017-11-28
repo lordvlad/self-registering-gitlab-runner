@@ -18,8 +18,8 @@ if [ -f "${CA_CERTIFICATES_PATH}" ]; then
   cmp --silent "${CA_CERTIFICATES_PATH}" "${LOCAL_CA_PATH}" || update_ca
 fi
 
-# register gitlab-ci-multi-runner
-exec gitlab-ci-multi-runner register
+# register gitlab-runner
+exec gitlab-runner register
 
-# launch gitlab-ci-multi-runner passing all arguments
-exec gitlab-ci-multi-runner run --working-directory /home/gitlab-runner
+# launch gitlab-runner passing all arguments
+exec gitlab-runner run --working-directory /home/gitlab-runner
