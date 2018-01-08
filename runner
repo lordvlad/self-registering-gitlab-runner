@@ -2,7 +2,7 @@
 
 # set up concurrency
 if [[ -f "/etc/gitlab-runner/config.toml" ]]; then
-  sed -i -e "/concurrent/d" "/etc/gitlab-runner/config.toml
+  sed -i -e "/concurrent/d" "/etc/gitlab-runner/config.toml"
 fi
 
 echo "concurrent=${CONCURRENT:-1}" >> /etc/gitlab-runner/config.toml
