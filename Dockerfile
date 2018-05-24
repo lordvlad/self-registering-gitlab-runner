@@ -7,8 +7,6 @@ ENV RUNNER_EXECUTOR docker
 ENV DOCKER_IMAGE docker:latest
 ENV DOCKER_VOLUMES /var/run/docker.sock:/var/run/docker.sock
 
-RUN apk --no-cache add openssh-client
-
 COPY runner /
 RUN chmod +x /runner
 
