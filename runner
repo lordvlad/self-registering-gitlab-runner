@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# set up private ssh key if one is given as env var
+if [[ -n "$GIT_PRIVATE_KEY" ]]; then
+  echo -e "found a private key, trying to add it to the ssh-agent\n$GIT_PRIVATE_KEY"
+  # Run ssh-agent (inside the build environment)
+  eval $(ssh-agent -s)
+
+  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  ssh-add <(echo -e "$GIT_PRIVATE_KEY")
+
+  # Disable host key checking. Be aware that by adding that
+  # you are susceptible to man-in-the-middle attacks.
+  mkdir -p ~/.ssh
+  echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+fi
+
 # set up concurrency
 if [[ -f "/etc/gitlab-runner/config.toml" ]]; then
   sed -i -e "/concurrent/d" "/etc/gitlab-runner/config.toml"
@@ -9,28 +24,6 @@ echo "concurrent=${CONCURRENT:-1}" >> /etc/gitlab-runner/config.toml
 
 # register gitlab-runner
 gitlab-runner register
-
-# set up private ssh key if one is given as env var
-if [[ -n "$GIT_PRIVATE_KEY" ]]; then
-  read -r -d '' SCRIPT << EOM
-  pre_clone_script = """
-  echo -e "found a private key, trying to add it to the ssh-agent\n$GIT_PRIVATE_KEY"
-  # Run ssh-agent (inside the build environment)
-  apk --no-cache add openssh-client
-  eval \$(ssh-agent -s)
-
-  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-  ssh-add <(echo -e "$GIT_PRIVATE_KEY")
-
-  # Disable host key checking. Be aware that by adding that
-  # you are susceptible to man-in-the-middle attacks.
-  mkdir -p ~/.ssh
-  echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  """
-EOM
-
-  echo "$SCRIPT" >> /etc/gitlab-runner/config.toml
-fi
 
 # present current config
 cat /etc/gitlab-runner/config.toml
