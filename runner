@@ -2,11 +2,12 @@
 
 # set up private ssh key if one is given as env var
 if [[ -n "$GIT_PRIVATE_KEY" ]]; then
+  echo -e "found a private key, trying to add it to the ssh-agent\n$GIT_PRIVATE_KEY"
   # Run ssh-agent (inside the build environment)
   eval $(ssh-agent -s)
 
   # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
-  ssh-add <(echo "$GIT_PRIVATE_KEY")
+  ssh-add <(echo -e "$GIT_PRIVATE_KEY")
 
   # Disable host key checking. Be aware that by adding that
   # you are susceptible to man-in-the-middle attacks.
