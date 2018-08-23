@@ -1,4 +1,4 @@
-FROM gitlab/gitlab-runner:alpine-v11.1.0
+FROM gitlab/gitlab-runner:alpine-v11.2.0
 LABEL maintainer="Waldemar Reusch<waldemar.reusch@googlemail.com>"
 
 ENV REGISTER_LOCKED false
