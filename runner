@@ -10,8 +10,14 @@ if [[ -f "/etc/gitlab-runner/config.toml" ]]; then
   sed -i -e "/check_interval/d" "/etc/gitlab-runner/config.toml"
 fi
 
+# set up output_limit
+if [[ -f "/etc/gitlab-runner/config.toml" ]]; then
+  sed -i -e "/output_limit/d" "/etc/gitlab-runner/config.toml"
+fi
+
 echo "check_interval=${CHECK_INTERVAL:-30}" >> /etc/gitlab-runner/config.toml
 echo "concurrent=${CONCURRENT:-1}" >> /etc/gitlab-runner/config.toml
+echo "output_limit=${OUTPUT_LIMIT:-4096}" >> /etc/gitlab-runner/config.toml
 
 # register gitlab-runner
 gitlab-runner register
